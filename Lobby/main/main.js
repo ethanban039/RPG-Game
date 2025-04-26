@@ -6,6 +6,7 @@ let newNotification = document.createElement("div")
 // Renders Everything
 const materialinventory = document.getElementById("materials-inventoryid")
 const matchCountElement = document.getElementById("matchCount")
+const woodCountElement = document.getElementById("woodCount")
 
 function rendering() {
     if (materialinventory) {
@@ -14,15 +15,21 @@ function rendering() {
     if(matchCountElement) {
         matchCountElement.textContent = matches // Updates matches when spent / gained
     }
+    if(woodCountElement) {
+        woodCountElement.textContent = wood // Updates wood when spent / gained
+    }
 }
 
 
-
+// Materials
 let matches =  0
+let wood = 0
+
+// Amount Of Completions
+let lightedfireamount = 0
 
 
 // Button Cooldowns & Button Function
-
 function startCooldown(buttonWrapper, duration) {
     const button = buttonWrapper.querySelector('.action-button');
     const overlay = buttonWrapper.querySelector('.cooldown-overlay');
@@ -42,47 +49,127 @@ function startCooldown(buttonWrapper, duration) {
     }, duration);
 }
 
+
+
+
+// ---------------------------- LIGHT MATCH ---------------------------- //
 function lightmatch() {
     const wrapper = document.querySelectorAll('.button-wrapper')[0];
-    startCooldown(wrapper, 1);
-
-    const matchCountElement = document.getElementById("matchCount");
+    startCooldown(wrapper, 10000); // 10s
     matches++;
-
-    const notificationsContainer = document.getElementById("notificationsContainer");
 
     const newNotification = document.createElement("div");
     newNotification.classList.add("notification");
-    newNotification.textContent = "The match burns.";
+    newNotification.textContent = "the match burns.";
 
     newNotification.style.background = "none";
-    newNotification.style.margin = "-5px auto 0 auto";
+    newNotification.style.lineHeight = "0";
 
-    notificationsContainer.appendChild(newNotification);
+    notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
 
-    // Only fade in (no fade out)
     setTimeout(() => {
-        newNotification.classList.add("show");
-    }, 10);
-
-    // Limit: after 21 notifications, remove the oldest one
-    if (notificationsContainer.children.length > 21) {
-        notificationsContainer.removeChild(notificationsContainer.children[0]);
-    }
-
-    rendering();
+        const notifications = notificationsContainer.children;
+        const total = notifications.length;
+    
+        for (let i = 0; i < total; i++) {
+            let opacity = 1 - (i / 20);
+            opacity = Math.max(opacity, 0);
+            notifications[i].style.opacity = opacity;
+        }
+    
+        if (notificationsContainer.children.length > 21) {
+            notificationsContainer.removeChild(notificationsContainer.lastChild);
+        }
+    }, 1)
 }
 
-
+// ---------------------------- LIGHT FIRE ---------------------------- //
 function lightfire() {
     const wrapper = document.querySelectorAll('.button-wrapper')[1];
 
     if(matches >=1) {
         matches--
-        startCooldown(wrapper, 8000);
-        rendering()
+        startCooldown(wrapper, 12000); // 12s
+        lightedfireamount+=1
+        
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notification");
+        newNotification.textContent = "the fire roars.";
+    
+        newNotification.style.background = "none";
+        newNotification.style.lineHeight = "0";
+    
+        notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
+    
+        setTimeout(() => {
+            const notifications = notificationsContainer.children;
+            const total = notifications.length;
+        
+            for (let i = 0; i < total; i++) {
+                let opacity = 1 - (i / 20);
+                opacity = Math.max(opacity, 0);
+                notifications[i].style.opacity = opacity;
+            }
+        
+            // Limit: after 21 notifications, remove the oldest one
+            if (notificationsContainer.children.length > 21) {
+                notificationsContainer.removeChild(notificationsContainer.lastChild);
+            }
+        }, 1)
     } else {
-
+        notEnoughMaterials()
     }
 }
 
+
+let woodRowElement = document.getElementById("wood-row").style.display = "none"
+const checkfireamount =  setInterval(() => {
+    if(woodRowElement) {
+        if(lightedfireamount >= 2) { // When the fire has been stoked twice, the wood option is now visible in materials
+            woodRowElement = document.getElementById("wood-row").style.display = "block"
+            wood+=5
+            clearInterval(checkfireamount)
+        } else  {
+            woodRowElement = document.getElementById("wood-row").style.display = "none"
+        }
+    }
+}, 50)
+
+
+setInterval(() => { // Renders every currency every 10ms
+    rendering()
+},10)
+
+
+
+
+
+function notEnoughMaterials() { // The function for when you don't have enough material for something
+    const newNotification = document.createElement("div");
+    newNotification.classList.add("notification");
+    newNotification.textContent = "you do not have enough.";
+
+    newNotification.style.background = "none";
+    newNotification.style.lineHeight = "0";
+
+    notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
+
+    // After adding, update opacity for all notifications
+    setTimeout(() => {
+        const notifications = notificationsContainer.children;
+        const total = notifications.length;
+    
+        for (let i = 0; i < total; i++) {
+            let opacity = 1 - (i / 20); // 0th item = 1.0, 20th item = 0.0
+            opacity = Math.max(opacity, 0); // Don't go below 0
+            notifications[i].style.opacity = opacity;
+        }
+    
+        // Limit: after 21 notifications, remove the oldest one
+        if (notificationsContainer.children.length > 21) {
+            notificationsContainer.removeChild(notificationsContainer.lastChild);
+        }
+    }, 1)
+
+    rendering();
+}

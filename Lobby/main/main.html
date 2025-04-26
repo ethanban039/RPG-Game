@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Lobby</title>
+</head>
+<body>
+
+    <div id="notificationsContainer"></div>
+
+
+    <div class="bb-container">
+        <div class="inner-bb">
+            <div class="stats-container">
+                <div class="top-stats">
+                    <div class="stat">HP: 100</div>
+                    <div class="stat">Gold: 0</div>
+                    <div class="stat">Level: 0</div>
+                </div>
+                    <div class="xp-stats">
+                        <span>XP: 0/100</span>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="heat-room-doables">
+        <div class="button-wrapper">
+            <button class="action-button" onclick="lightmatch()">light match</button>
+            <div class="cooldown-overlay"></div>
+        </div>
+    
+        <div class="button-wrapper activematerials">
+            <button class="action-button" onclick="lightfire()">light fire</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials">match 1</div>
+        </div>
+    </div>
+
+    <div class="buyables-column1">
+        <p>build:</p>
+    </div>
+
+
+    <div class="materials-inventory" style="visibility: hidden;" id="materials-inventoryid">
+        <div class="match-row">
+            <span class="rowkey">match</span>
+            <span class="rowval" id="matchCount">0</span>
+        </div>
+    </div>
+
+
+    
+</body>
+</html>
+
+<script src="main.js"></script>
+<link href="main.css" rel="stylesheet">

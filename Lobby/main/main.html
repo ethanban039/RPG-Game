@@ -32,21 +32,27 @@
         <div class="button-wrapper activematerials">
             <button class="action-button" onclick="lightfire()">light fire</button>
             <div class="cooldown-overlay"></div>
-            <div class="materials">match 1</div>
+            <div class="materials">match <span>1</span></div>
         </div>
     </div>
 
-    <div class="buyables-column1">
+    <div id="buyables-column1">
         <p>build:</p>
+        <div class="button-wrapper activematerials">
+            <button class="action-button" onclick="buildTrap()">trap</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials">wood <span>5</span></div>
+        </div>
     </div>
 
 
     <div class="materials-inventory" style="visibility: hidden;" id="materials-inventoryid">
+        <p style="display: flex; justify-content: center; font-weight: 500;">Materials</p>
         <div id="match-row">
             <span class="rowkey">match</span>
             <span class="rowval" id="matchCount">0</span>
         </div>
-        <div id="wood-row">
+        <div id="wood-row" style="display: none;">
             <span class="rowkey">wood</span>
             <span class="rowval" id="woodCount">0</span>
         </div>

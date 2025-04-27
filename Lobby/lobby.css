@@ -13,14 +13,10 @@ body {
 button {
     text-decoration: none;
 
-    padding: 5px;
-    width: 100px;
     font-weight: 400;
 
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
 
     background:none;
     border: white 1px solid;
@@ -107,7 +103,7 @@ button {
     position: relative;
     z-index: 2;
     width: 100px;
-    font-size: 16px;
+    font-size: 15px;
     text-decoration: none;
     cursor: pointer;
   }
@@ -166,13 +162,25 @@ button {
 /* End Of Materials Needed Dropdown */
 
 #buyables-column1 {
-    display: none;
-    justify-content: center;
-    margin-right: 325px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin: 0vh auto 0 40.2%;
 }
 
-
 #buyables-column1 p {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+#buyables-column2 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin: 0vh auto 0 46.6%;
+}
+
+#buyables-column2 p {
     font-size: 17px;
     font-weight: 400;
 }
@@ -204,3 +212,10 @@ button {
     margin-right: 10px;
 }
 
+
+#gather-column1 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin: -6.7vh auto 0 5%;
+}

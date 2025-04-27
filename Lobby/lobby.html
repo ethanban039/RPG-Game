@@ -5,16 +5,18 @@
 </head>
 <body>
 
+    <!--Notifcations Area On The Left-->
     <div id="notificationsContainer"></div>
 
 
+    <!--Player Stats Container-->
     <div class="bb-container">
         <div class="inner-bb">
             <div class="stats-container">
                 <div class="top-stats">
                     <div class="stat">HP: 100</div>
                     <div class="stat">Gold: 0</div>
-                    <div class="stat">Level: 0</div>
+                    <div class="stat">Level: 1</div>
                 </div>
                     <div class="xp-stats">
                         <span>XP: 0/100</span>
@@ -23,6 +25,7 @@
         </div>
     </div>
 
+    <!--Heat The Room Row-->
     <div class="heat-room-doables">
         <div class="button-wrapper">
             <button class="action-button" onclick="lightmatch()">light match</button>
@@ -36,16 +39,38 @@
         </div>
     </div>
 
-    <div id="buyables-column1">
-        <p>build:</p>
-        <div class="button-wrapper activematerials">
-            <button class="action-button" onclick="buildTrap()">trap</button>
+    <!--Gathering Area On Far Left-->
+    <div id="gather-column1" style="display: none;">
+        <p>gather:</p>
+        <div class="button-wrapper">
+            <button class="action-button" onclick="gatherWood()" id="gather-wood">gather wood</button>
             <div class="cooldown-overlay"></div>
-            <div class="materials">wood <span>5</span></div>
         </div>
     </div>
 
 
+    <!--Building Column (ONE TIME BUYABLE)-->
+    <div id="buyables-column1" style="display: none;"> 
+        <p>build:</p>
+        <div class="button-wrapper activematerials">
+            <button class="action-button" onclick="buildWorkBench()" id="work-bench">workbench</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials" id="workBenchMaterials">wood <span>5</span></div>
+        </div>
+    </div>
+
+    <!--Crafting Column-->
+    <div id="buyables-column2" style="display: none;">
+        <p>craft:</p>
+        <div class="button-wrapper activematerials">
+            <button class="action-button" onclick="craftSticks()" id="work-bench">sticks</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials">wood <span>1</span></div>
+        </div>
+    </div>
+
+
+    <!--Materials Inventory-->
     <div class="materials-inventory" style="visibility: hidden;" id="materials-inventoryid">
         <p style="display: flex; justify-content: center; font-weight: 500;">Materials</p>
         <div id="match-row">
@@ -56,6 +81,10 @@
             <span class="rowkey">wood</span>
             <span class="rowval" id="woodCount">0</span>
         </div>
+        <div id="stick-row">
+            <span class="rowkey">stick</span>
+            <span class="rowval" id="stickCount">0</span>
+        </div>
     </div>
 
 
@@ -63,5 +92,9 @@
 </body>
 </html>
 
-<script src="main.js"></script>
-<link href="main.css" rel="stylesheet">
+<script src="1heatAndBuild.js"></script>
+<script src="2craft.js"></script>
+
+<script src="4gather.js"></script>
+<link href="lobby.css" rel="stylesheet">
+

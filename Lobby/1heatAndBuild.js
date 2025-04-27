@@ -2,11 +2,15 @@
 let notificationsContainer = document.getElementById("notificationsContainer");
 let newNotification = document.createElement("div")
 
+// Console Warnings
+console.warn("Currencies may be bugged with undefined functions or stray characters")
+
 
 // Renders Everything
 const materialinventory = document.getElementById("materials-inventoryid")
 const matchCountElement = document.getElementById("matchCount")
 const woodCountElement = document.getElementById("woodCount")
+const stickCountElement = document.getElementById("stickCount")
 
 function rendering() {
     if (materialinventory) {
@@ -18,13 +22,26 @@ function rendering() {
     if(woodCountElement) {
         woodCountElement.textContent = wood // Updates wood when spent / gained
     }
+    if(stickCountElement) {
+        stickCountElement.textContent = stick // Updates sticks when spent / gained
+    }
 }
 
 
 // Materials
 let matches =  0
 let wood = 0
+let stick = 0
+
+// Temperature Related
 let temperature = 5 // celcius
+
+// Player Stats
+let hp = 100
+let gold = 0
+let level = 1
+let currentxp = 0
+let xpneeded = 100
 
 // Amount Of Completions
 let lightedfireamount = 0
@@ -52,11 +69,11 @@ function startCooldown(buttonWrapper, duration) {
 
 
 
-
+// ---------------------------- LIGHT MATCH ---------------------------- //
 // ---------------------------- LIGHT MATCH ---------------------------- //
 function lightmatch() {
     const wrapper = document.querySelectorAll('.button-wrapper')[0];
-    startCooldown(wrapper, 50); // 10s
+    startCooldown(wrapper, 10000); // 10s
     matches++;
 
     const newNotification = document.createElement("div");
@@ -87,14 +104,16 @@ function lightmatch() {
 }
 
 // ---------------------------- LIGHT FIRE ---------------------------- //
+// ---------------------------- LIGHT FIRE ---------------------------- //
 function lightfire() {
     const wrapper = document.querySelectorAll('.button-wrapper')[1];
 
     if(matches >=1) {
         matches--
-        startCooldown(wrapper, 12); // 12s
+        startCooldown(wrapper, 12000); // 12s
         lightedfireamount+=1
         temperature +=10
+        document.title = "A Firelit Room"
         
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
@@ -119,9 +138,8 @@ function lightfire() {
                 notificationsContainer.removeChild(notificationsContainer.lastChild);
             }
         }, 1)
-    } else {
+    } else{
         notEnoughMaterials()
-        rendering()
     }
 
     rendering()
@@ -134,6 +152,7 @@ const checkfireamount =  setInterval(() => {
         if(lightedfireamount >= 2) { // When the fire has been stoked twice, the wood option is now visible in materials
             woodRowElement = document.getElementById("wood-row").style.display = "block"
             wood = wood + 5
+            unlockBuildings()
             rendering()
             clearInterval(checkfireamount)
         } else  {
@@ -142,12 +161,85 @@ const checkfireamount =  setInterval(() => {
     }
 }, 50)
 
-/*
-let buildTrapButton = document.getElementById("buildTrap").style.display = "block"
-function focusOnBuilding() {
 
+
+
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+// ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
+let buildColumnElement = document.getElementById("buyables-column1")
+function unlockBuildings() {
+    if(buildColumnElement) {
+        buildColumnElement = document.getElementById("buyables-column1").style.display = "flex"
+        buildColumnElement = document.getElementById("buyables-column1").style.position = "absolute"
+    } else {
+        buildColumnElement = document.getElementById("buyables-column1").style.display = "none"
+    }
 }
-*/
+
+// ---------------------------- BUILD WORKBENCH (ONE TIME BUYABLE) ---------------------------- //
+// ---------------------------- BUILD WORKBENCH (ONE TIME BUYABLE) ---------------------------- //
+
+let workBenchBuilt = false
+let workBenchButton = document.getElementById("work-bench")
+let workBenchMaterials = document.getElementById("workBenchMaterials")
+function buildWorkBench() {
+    if(wood >=5 && workBenchBuilt === false) {
+        wood-=5
+        unlockCrafting() // JAVASCIRPT SOURCE = 2craft.js
+        unlockGathering()
+        workBenchButton = document.getElementById("work-bench").style.cursor = "not-allowed"
+        workBenchButton = document.getElementById("work-bench").style.color = "rgb(68, 68, 68)"
+        workBenchButton = document.getElementById("work-bench").style.textDecoration = "none"
+        workBenchMaterials = document.getElementById("workBenchMaterials").style.display = "none"
+
+        workBenchBuilt = true
+        
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notification");
+        newNotification.innerHTML = "the basic workbench has been built.";
+        newNotification.style.background = "none";
+        newNotification.style.lineHeight = "1.0";
+    
+        notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
+    
+        setTimeout(() => {
+            const notifications = notificationsContainer.children;
+            const total = notifications.length;
+        
+            for (let i = 0; i < total; i++) {
+                let opacity = 1 - (i / 20);
+                opacity = Math.max(opacity, 0);
+                notifications[i].style.opacity = opacity;
+            }
+        
+            // Limit: after 21 notifications, remove the oldest one
+            if (notificationsContainer.children.length > 21) {
+                notificationsContainer.removeChild(notificationsContainer.lastChild);
+            }
+        }, 1)
+    } else if(wood < 5 && workBenchBuilt === false) {
+        lightedfireamount = lightedfireamount
+        wood = wood
+        notEnoughMaterials()
+    } else if(workBenchBuilt === true) {
+        console.warn("User tried to buy something already bought")
+    }
+
+    rendering()
+}
+
+
+
+
+
+
+
+
+
 
 
 function notEnoughMaterials() { // The function for when you don't have enough material for something
@@ -179,6 +271,11 @@ function notEnoughMaterials() { // The function for when you don't have enough m
 
     rendering();
 }
+
+
+
+
+
 
 
 
@@ -290,10 +387,10 @@ setInterval(() => {
         }, 1)
     }
 
-}, 10000)
+}, 30000)
 
 
-setInterval(() => { // Temperature decreases by 1c every 6.5 seconds
+setInterval(() => { // Temperature decreases by 1c every 10 seconds
     temperature-=1
-}, 6500)
+}, 10000)
 

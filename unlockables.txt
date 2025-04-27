@@ -1,0 +1,10 @@
+all variables & key functions located in 1heatAndBuild.js, near the bottom
+
+action: light match --> match visible in materials (1heatAndBuild.js)
+action: light fire x2 --> wood visible in materials (1heatAndBuild.js)
+
+action: buy workbench: (1heatAndBuild.js) 
+--> unlocks crafting column (2craft.js)
+--> unlocks stick crafting (2craft.js)
+--> unlocks gathering column (4gather.js)
+--> unlocks wood gathering (4gather.js)

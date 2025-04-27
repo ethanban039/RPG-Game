@@ -1,0 +1,1 @@
+// Do this when health & gold are used in the game.

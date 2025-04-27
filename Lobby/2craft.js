@@ -19,7 +19,7 @@ let stickRowElement = document.getElementById("stick-row").style.display = "none
 function craftSticks() {
     if(wood >=1) {
         wood--
-        stick++
+        stick+=3
         stickRowElement = document.getElementById("stick-row").style.display = "block"
 
         const newNotification = document.createElement("div");

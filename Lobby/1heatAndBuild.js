@@ -11,6 +11,8 @@ const materialinventory = document.getElementById("materials-inventoryid")
 const matchCountElement = document.getElementById("matchCount")
 const woodCountElement = document.getElementById("woodCount")
 const stickCountElement = document.getElementById("stickCount")
+const stoneCountElement = document.getElementById("stoneCount")
+const fishingPoleCountElement = document.getElementById("fishingPoleCount")
 
 function rendering() {
     if (materialinventory) {
@@ -25,6 +27,12 @@ function rendering() {
     if(stickCountElement) {
         stickCountElement.textContent = stick // Updates sticks when spent / gained
     }
+    if(stoneCountElement) {
+        stoneCountElement.textContent = stone // Updates stone when spent / gained
+    }
+    if(fishingPoleCountElement) {
+        fishingPoleCountElement.textContent = fishingPoleAmount // Updates when you have the fishing pole
+    }
 }
 
 
@@ -32,6 +40,11 @@ function rendering() {
 let matches =  0
 let wood = 0
 let stick = 0
+let stone = 0
+
+// Tools
+let fishingPoleAmount = 0
+
 
 // Temperature Related
 let temperature = 5 // celcius
@@ -73,7 +86,7 @@ function startCooldown(buttonWrapper, duration) {
 // ---------------------------- LIGHT MATCH ---------------------------- //
 function lightmatch() {
     const wrapper = document.querySelectorAll('.button-wrapper')[0];
-    startCooldown(wrapper, 10000); // 10s
+    startCooldown(wrapper, 10); // 10s
     matches++;
 
     const newNotification = document.createElement("div");
@@ -110,14 +123,14 @@ function lightfire() {
 
     if(matches >=1) {
         matches--
-        startCooldown(wrapper, 12000); // 12s
+        startCooldown(wrapper, 12); // 12s
         lightedfireamount+=1
         temperature +=10
         document.title = "A Firelit Room"
         
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
-        newNotification.textContent = "the fire lights with brightness.";
+        newNotification.textContent = "the fire roars.";
         newNotification.style.background = "none";
         newNotification.style.lineHeight = "0.2";
     
@@ -171,10 +184,16 @@ const checkfireamount =  setInterval(() => {
 // ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
 // ---------------------------- UNLOCK THE BUILD COLUMN ---------------------------- //
 let buildColumnElement = document.getElementById("buyables-column1")
+let workBenchContainer = document.getElementById("workBenchWrapper")
+let forgeContainer = document.getElementById("forgeWrapper")
+
 function unlockBuildings() {
     if(buildColumnElement) {
         buildColumnElement = document.getElementById("buyables-column1").style.display = "flex"
         buildColumnElement = document.getElementById("buyables-column1").style.position = "absolute"
+
+        workBenchContainer = document.getElementById("workBenchWrapper").style.display = "block" // Shown when first unlocked
+        forgeContainer = document.getElementById("forgeWrapper").style.display = "none" // Hidden until workbench bought
     } else {
         buildColumnElement = document.getElementById("buyables-column1").style.display = "none"
     }
@@ -190,6 +209,7 @@ function buildWorkBench() {
     if(wood >=5 && workBenchBuilt === false) {
         wood-=5
         unlockCrafting() // JAVASCIRPT SOURCE = 2craft.js
+        unlockForgeCraft()
         unlockGathering()
         workBenchButton = document.getElementById("work-bench").style.cursor = "not-allowed"
         workBenchButton = document.getElementById("work-bench").style.color = "rgb(68, 68, 68)"
@@ -200,7 +220,7 @@ function buildWorkBench() {
         
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
-        newNotification.innerHTML = "the basic workbench has been built.";
+        newNotification.innerHTML = "workbench has been constructed.";
         newNotification.style.background = "none";
         newNotification.style.lineHeight = "1.0";
     
@@ -231,6 +251,67 @@ function buildWorkBench() {
 
     rendering()
 }
+
+
+// ---------------------------- BUILD FORGE (ONE TIME BUYABLE) ---------------------------- //
+// ---------------------------- BUILD FORGE (ONE TIME BUYABLE) ---------------------------- //
+
+function unlockForgeCraft() {
+    forgeContainer = document.getElementById("forgeWrapper").style.display = "block"
+}
+
+let forgeBuilt = false
+let forgeButton = document.getElementById("forge")
+let forgeMaterials = document.getElementById("forgeMaterials")
+function buildForge() {
+    if(stone >=5 && forgeBuilt === false) {
+        stone-=5
+        unlockForge()
+        forgeButton = document.getElementById("forge").style.cursor = "not-allowed"
+        forgeButton = document.getElementById("forge").style.color = "rgb(68, 68, 68)"
+        forgeButton = document.getElementById("forge").style.textDecoration = "none"
+        forgeMaterials = document.getElementById("forgeMaterials").style.display = "none"
+
+        forgeBuilt = true
+        
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notification");
+        newNotification.innerHTML = "you can now craft tools.";
+        newNotification.style.background = "none";
+        newNotification.style.lineHeight = "1.0";
+    
+        notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
+    
+        setTimeout(() => {
+            const notifications = notificationsContainer.children;
+            const total = notifications.length;
+        
+            for (let i = 0; i < total; i++) {
+                let opacity = 1 - (i / 20);
+                opacity = Math.max(opacity, 0);
+                notifications[i].style.opacity = opacity;
+            }
+        
+            // Limit: after 21 notifications, remove the oldest one
+            if (notificationsContainer.children.length > 21) {
+                notificationsContainer.removeChild(notificationsContainer.lastChild);
+            }
+        }, 1)
+    } else if(stone < 5 && forgeBuilt === false) {
+        stone = stone
+        notEnoughMaterials()
+    } else if(forgeBuilt === true) {
+        console.warn("User tried to buy something already bought")
+    }
+
+    rendering()
+}
+
+
+
+
+
+
 
 
 

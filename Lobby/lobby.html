@@ -46,16 +46,25 @@
             <button class="action-button" onclick="gatherWood()" id="gather-wood">gather wood</button>
             <div class="cooldown-overlay"></div>
         </div>
+        <div class="button-wrapper">
+            <button class="action-button" onclick="gatherStone()" id="gather-stone">gather stone</button>
+            <div class="cooldown-overlay"></div>
+        </div>
     </div>
 
 
-    <!--Building Column (ONE TIME BUYABLE)-->
+    <!--Building Column-->
     <div id="buyables-column1" style="display: none;"> 
         <p>build:</p>
-        <div class="button-wrapper activematerials">
+        <div class="button-wrapper activematerials" id="workBenchWrapper">
             <button class="action-button" onclick="buildWorkBench()" id="work-bench">workbench</button>
             <div class="cooldown-overlay"></div>
             <div class="materials" id="workBenchMaterials">wood <span>5</span></div>
+        </div>
+        <div class="button-wrapper" style="display: none;" id="forgeWrapper">
+            <button class="action-button" onclick="buildForge()" id="forge">forge</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials" id="forgeMaterials">stone <span>5</span></div>
         </div>
     </div>
 
@@ -66,6 +75,16 @@
             <button class="action-button" onclick="craftSticks()" id="work-bench">sticks</button>
             <div class="cooldown-overlay"></div>
             <div class="materials">wood <span>1</span></div>
+        </div>
+    </div>
+
+    <!--Forging Column-->
+    <div id="buyables-column3" style="display: none;">
+        <p>forge:</p>
+        <div class="button-wrapper activematerials">
+            <button class="action-button" onclick="forgeFishingPole()" id="ffishing-pole">fishing pole</button>
+            <div class="cooldown-overlay"></div>
+            <div class="materials" id="fishingPoleMaterials"> stick<span>15</span><br>stone <span>3</span> </div>
         </div>
     </div>
 
@@ -85,6 +104,19 @@
             <span class="rowkey">stick</span>
             <span class="rowval" id="stickCount">0</span>
         </div>
+        <div id="stone-row">
+            <span class="rowkey">stone</span>
+            <span class="rowval" id="stoneCount">0</span>
+        </div>
+    </div>
+
+    <!--Tools Inventory-->
+    <div class="tools-inventory" style="visibility: hidden;" id="tools-inventoryid">
+        <p style="display: flex; justify-content: center; font-weight: 500;">Tools</p>
+        <div id="fishingpole-row">
+            <span class="rowkey">fishing pole</span>
+            <span class="rowval" id="fishingPoleCount">0</span>
+        </div>
     </div>
 
 
@@ -94,7 +126,8 @@
 
 <script src="1heatAndBuild.js"></script>
 <script src="2craft.js"></script>
-
+<script src="3forge.js"></script>
 <script src="4gather.js"></script>
+<script src="eventlisteners.js"></script>
 <link href="lobby.css" rel="stylesheet">
 

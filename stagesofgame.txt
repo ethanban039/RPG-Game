@@ -1,0 +1,6 @@
+Stages of the game
+
+Stage 1: Matches & Wood unlocked
+Stage 2: Stone unlocked
+Stage 3: Population & huts unlocked
+Stage 4: Population over 10

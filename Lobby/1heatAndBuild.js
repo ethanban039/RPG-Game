@@ -58,6 +58,11 @@ let xpneeded = 100
 
 // Amount Of Completions
 let lightedfireamount = 0
+let amountofHuts = 0
+let population = 0
+
+// Stages of the game (stagesofgame.txt)
+let stageOfGame = 1
 
 
 // Button Cooldowns & Button Function
@@ -186,6 +191,7 @@ const checkfireamount =  setInterval(() => {
 let buildColumnElement = document.getElementById("buyables-column1")
 let workBenchContainer = document.getElementById("workBenchWrapper")
 let forgeContainer = document.getElementById("forgeWrapper")
+let hutContainer = document.getElementById("hutWrapper")
 
 function unlockBuildings() {
     if(buildColumnElement) {
@@ -193,7 +199,8 @@ function unlockBuildings() {
         buildColumnElement = document.getElementById("buyables-column1").style.position = "absolute"
 
         workBenchContainer = document.getElementById("workBenchWrapper").style.display = "block" // Shown when first unlocked
-        forgeContainer = document.getElementById("forgeWrapper").style.display = "none" // Hidden until workbench bought
+        forgeContainer = document.getElementById("forgeWrapper").style.display = "none" // Hidden until workbench is bought
+        hutContainer = document.getElementById("hutWrapper").style.display = "none" // Hidden until forge is bought
     } else {
         buildColumnElement = document.getElementById("buyables-column1").style.display = "none"
     }
@@ -267,6 +274,7 @@ function buildForge() {
     if(stone >=5 && forgeBuilt === false) {
         stone-=5
         unlockForge()
+        unlockHutBuild()
         forgeButton = document.getElementById("forge").style.cursor = "not-allowed"
         forgeButton = document.getElementById("forge").style.color = "rgb(68, 68, 68)"
         forgeButton = document.getElementById("forge").style.textDecoration = "none"
@@ -307,11 +315,54 @@ function buildForge() {
     rendering()
 }
 
+// ---------------------------- BUILD HUT  ---------------------------- //
+// ---------------------------- BUILD HUT  ---------------------------- //
 
+function unlockHutBuild() {
+    hutContainer = document.getElementById("hutWrapper").style.display = "block"
+}
 
+let hutMaterials = document.getElementById("hutMaterials")
+let hutButton = document.getElementById("hut")
+function buildHut() {
+    const wrapper = document.querySelectorAll('.button-wrapper')[4];
+    if(wood >= 30 && stone >=15) {
+        wood-=30
+        stone-=30
+        startCooldown(wrapper, 3000); // 3s
+        amountofHuts +=1
+        population = population + Math.ceil(Math.random() *3)
+        console.log(population)
+        
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notification");
+        newNotification.textContent = "you build a small shack, which attract little visitors.";
+        newNotification.style.background = "none";
+        newNotification.style.lineHeight = "1.0";
+    
+        notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
+    
+        setTimeout(() => {
+            const notifications = notificationsContainer.children;
+            const total = notifications.length;
+        
+            for (let i = 0; i < total; i++) {
+                let opacity = 1 - (i / 20);
+                opacity = Math.max(opacity, 0);
+                notifications[i].style.opacity = opacity;
+            }
+        
+            // Limit: after 21 notifications, remove the oldest one
+            if (notificationsContainer.children.length > 21) {
+                notificationsContainer.removeChild(notificationsContainer.lastChild);
+            }
+        }, 1)
+    } else {
+        notEnoughMaterials()
+    }
 
-
-
+    rendering()
+}
 
 
 

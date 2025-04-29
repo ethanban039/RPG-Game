@@ -15,3 +15,11 @@ forgeFishingPoleButton.addEventListener("mouseenter", () => {
 forgeFishingPoleButton.addEventListener("mouseleave", () => {
     fishingPoleMaterials.style.display = "none"
 })
+
+hutButton.addEventListener("mouseenter", () => {
+    hutMaterials.style.display = "block"
+})
+
+hutButton.addEventListener("mouseleave", () => {
+    hutMaterials.style.display = "none"
+})

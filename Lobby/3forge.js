@@ -37,9 +37,9 @@ function forgeFishingPole() {
 
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
-        newNotification.innerHTML = "with a cast, anything is on ur hands.";
+        newNotification.innerHTML = "fishing events are at your stake.";
         newNotification.style.background = "none";
-        newNotification.style.lineHeight = "1.0";
+        newNotification.style.lineHeight = "0.2";
     
         notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
     

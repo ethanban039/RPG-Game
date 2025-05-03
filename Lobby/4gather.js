@@ -44,7 +44,7 @@ function gatherWood() {
         }
     }, 1)
 
-    rendering()()
+    rendering()
 }
 
 
@@ -61,7 +61,7 @@ function gatherStone() {
     newNotification.classList.add("notification");
     newNotification.innerHTML = "you pick up scraps of rock.";
     newNotification.style.background = "none";
-    newNotification.style.lineHeight = "1.0";
+    newNotification.style.lineHeight = "0.2";
 
     notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
 

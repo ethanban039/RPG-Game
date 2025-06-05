@@ -135,7 +135,7 @@ function lightfire() {
         
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
-        newNotification.textContent = "the fire roars.";
+        newNotification.textContent = "the fire is roaring.";
         newNotification.style.background = "none";
         newNotification.style.lineHeight = "0.2";
     
@@ -227,9 +227,9 @@ function buildWorkBench() {
         
         const newNotification = document.createElement("div");
         newNotification.classList.add("notification");
-        newNotification.innerHTML = "workbench has been constructed.";
+        newNotification.innerHTML = "crafting suddenly exists.";
         newNotification.style.background = "none";
-        newNotification.style.lineHeight = "1.0";
+        newNotification.style.lineHeight = "0.2";
     
         notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
     
@@ -286,7 +286,7 @@ function buildForge() {
         newNotification.classList.add("notification");
         newNotification.innerHTML = "you can now craft tools.";
         newNotification.style.background = "none";
-        newNotification.style.lineHeight = "1.0";
+        newNotification.style.lineHeight = "0.2";
     
         notificationsContainer.insertBefore(newNotification, notificationsContainer.firstChild);
     
@@ -526,3 +526,7 @@ setInterval(() => { // Temperature decreases by 1c every 10 seconds
     temperature-=1
 }, 10000)
 
+setInterval(() => {
+    console.clear()
+    console.warn("Console Cleared")
+}, 10000) // Every 10s, clear console
